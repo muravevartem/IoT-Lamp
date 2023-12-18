@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT-Lamp</title>
+    <style>
+        * {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form_network {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form_radio_btn {
+            margin: 5px;
+        }
+
+        .form_radio_btn input[type=radio] {
+            display: none;
+        }
+
+        .form_radio_btn label {
+            display: block;
+            cursor: pointer;
+            padding: 0px 15px;
+            line-height: 34px;
+            border: 1px solid #999;
+            border-radius: 6px;
+            user-select: none;
+        }
+
+        .form_radio_btn input[type=radio]:checked+label {
+            background-color: lavender;
+        }
+
+        .form_radio_btn label:hover {
+            background-color: #999;
+        }
+
+        .form_network_pass>input {
+            margin: 0;
+            padding: 0;
+        }
+
+        .form_network_pass>input {
+            display: block;
+            border: none;
+            font-size: 1.3em;
+            width: 100%;
+        }
+
+        .form_submit_btn>input[type=submit] {
+            font-weight: 600;
+            color: #222;
+            font-size: 1em;
+            border: none;
+            padding: 15px;
+            border-radius: 15px;
+        }
+
+        .form_submit_btn>input:hover {
+            background-color: lavender;
+        }
+
+        .error {
+            background-color: palevioletred;
+            color: white;
+            font-weight: 500;
+            padding: 5px 20px;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background">
+        <form action="/connect" method="get" class="form" id="form-network">
+            <div class="error" id="error" style="display: none;">
+                Возникла ошибка
+            </div>
+            <h1>Подключение к сети</h1>
+            <fieldset class="form_network" id="actual-networks">
+                <legend><b>Доступные сети</b></legend>
+                <!-- <div class="form_radio_btn">
+                    <input type="radio" id="ssid-Network" name="ssid" value="Network" />
+                    <label for="ssid-Network">Network</label>
+                </div> -->
+            </fieldset>
+            <fieldset class="form_network form_network_pass">
+                <legend><b>Пароль</b></legend>
+                <input required type="password" name="pass" placeholder="******" />
+            </fieldset>
+            <div class="form_submit_btn">
+                <input type="submit" value="Подключиться" />
+            </div>
+        </form>
+    </div>
+
+    <script>
+        async function scanNetworks() {
+            const response = await fetch(`/scan`);
+            const networks = await response.json();
+            let netContainer = document.getElementById('actual-networks');
+            for (let network of networks) {
+                let divBtn = document.createElement('div');
+                divBtn.className = 'form_radio_btn';
+
+                let radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.id = 'ssid_' + networks.indexOf(network);
+                radio.name = 'ssid';
+                radio.value = network.ssid;
+
+                let label = document.createElement('label');
+                label.htmlFor = radio.id;
+                label.innerText = network.ssid;
+
+                divBtn.append(radio, label);
+                netContainer.append(divBtn);
+            }
+        }
+        scanNetworks()
+            .catch(() => {
+                let error = document.getElementById('error');
+                error.style.display = 'block';
+            });
+        let form = document.getElementById('form-network');
+        form.addEventListener('submit', (ev) => {
+            ev.preventDefault();
+            fetch('/connect', {
+                method: 'GET',
+                body: new FormData(form)
+            })
+            .finally(() => document.location.href = '/check')
+        })
+    </script>
+</body>
+
+</html>
