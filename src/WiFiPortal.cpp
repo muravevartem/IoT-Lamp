@@ -69,5 +69,5 @@ void WiFiPortal::start()
     _portalserver.on("/scan", HTTP_GET, _handle_scan);
     _portalserver.on("/connect", HTTP_GET, _handle_connect);
     _portalserver.begin();
-    MDNS.begin("lampochka");
+    MDNS.begin("lampochka.local");
 }
