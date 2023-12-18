@@ -1,5 +1,10 @@
 #include "MqttProducer.h"
+#include "PubSubClient.h"
 
-void MqttProducer::send(char *topic)
+
+extern PubSubClient _mqtt_client;
+
+void MqttProducer::send(const char *topic, const char *payload)
 {
+    _mqtt_client.publish(topic, payload);
 }

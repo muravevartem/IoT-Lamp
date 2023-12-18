@@ -2,5 +2,5 @@
 #include <Arduino.h>
 
 namespace MqttProducer {
-    void send(char* topic);
+    void send(const char *topic, const char *payload);
 }
