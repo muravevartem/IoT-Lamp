@@ -1,6 +1,7 @@
 #include "MqttListener.h"
 #include "PubSubClient.h"
 #include "Utitlity.h"
+#include "MqttProducer.h"
 
 #define TEST_TOPIC_1 "/topicforme/123"
 
@@ -21,6 +22,6 @@ void MqttListener::callback(char* topic, byte* payload, unsigned int length)
     String _topic(topic);
     if (_topic.equals(TEST_TOPIC_1))
     {
-        DebugLn("New message in test topic");
+        MqttProducer::send("test/123", "Так-с, что-то не так");
     }
 }

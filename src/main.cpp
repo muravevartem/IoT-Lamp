@@ -24,10 +24,4 @@ void loop()
   WiFiConnect::isConnected();
   WiFiPortal::tick();
   Mqtt::tick();
-
-  static Timer t(1000);
-  if (t.click()) {
-    MqttProducer::send("test/123", "ahahah");
-    t.reset();
-  }
 }
