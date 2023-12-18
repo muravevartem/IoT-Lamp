@@ -6,8 +6,7 @@
 #include <WiFiPortal.h>
 #include <WiFiConfig.h>
 #include <WiFiConnect.h>
-
-
+#include <MqttConnect.h>
 
 void setup()
 {
@@ -20,6 +19,9 @@ void setup()
 
 void loop()
 {
-  WiFiConnect::isConnected();
-  WiFiPortal::tick();
+  if (WiFiConnect::isConnected())
+  {
+    WiFiPortal::tick();
+    Mqtt::tick();
+  }
 }
