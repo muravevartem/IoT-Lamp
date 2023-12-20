@@ -10,6 +10,9 @@
 #include <MqttProducer.h>
 #include <Utitlity.h>
 
+#define DEBUG_ESP_PORT Serial
+#define DEBUG_ESP_HTTP_CLIENT
+
 void setup()
 {
   Serial.begin(9600);

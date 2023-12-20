@@ -1,5 +1,6 @@
 #include "WiFiConfig.h"
 #include "EEPROM.h"
+#include "EEPROMAddress.h"
 
 
 #define for_i(n) for (int i = 0; i < n; i++)
@@ -21,7 +22,7 @@ struct WiFiC
 void WiFiConfig::init()
 {
     WiFiC config;
-    EEPROM.get(WIFI_EEPROM_ADDR, config);
+    EEPROM.get(EEPROM_WIFI_CONFIG, config);
     _wifi_ssid = String(config.ssid);
     _wifi_pass = String(config.pass);
     _wifi_mode = config.mode;
@@ -39,7 +40,7 @@ void WiFiConfig::commit()
     _wifi_ssid.toCharArray(config.ssid, 16);
     _wifi_pass.toCharArray(config.pass, 16);
     config.mode = _wifi_mode;
-    EEPROM.put(WIFI_EEPROM_ADDR, config);
+    EEPROM.put(EEPROM_WIFI_CONFIG, config);
     EEPROM.commit();
 
     Debug("Saved to EEPROM ");

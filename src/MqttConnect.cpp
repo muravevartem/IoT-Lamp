@@ -4,7 +4,7 @@
 #include "MqttListener.h"
 #include "Utitlity.h"
 
-WiFiClient _wifi_client;
+extern WiFiClient _wifi_client;
 PubSubClient _mqtt_client(MQTT_SERVER_URL, MQTT_SERVER_PORT, _wifi_client);
 
 bool Mqtt::isConnected()

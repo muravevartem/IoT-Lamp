@@ -1,6 +1,7 @@
 #include "WiFiConnect.h"
 #include "WiFiConfig.h"
 #include "ESP8266WiFi.h"
+#include "DeviceRegistrar.h"
 
 #define WIFI_AP_MODE 0x1
 #define WIFI_STA_MODE 0x2
@@ -15,6 +16,7 @@ extern String _wifi_ssid;
 extern String _wifi_pass;
 extern uint8_t _wifi_mode;
 
+WiFiClient _wifi_client;
 
 void _logSuccessCreated()
 {
@@ -95,6 +97,7 @@ bool WiFiConnect::connect()
             connect();
             return false;
         }
+        DeviceRegistrar::regist();
         return true;
     }
     else

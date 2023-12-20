@@ -2,6 +2,7 @@
 #include "PubSubClient.h"
 #include "Utitlity.h"
 #include "MqttProducer.h"
+#include "DeviceRegistrar.h"
 
 #define TEST_TOPIC_1 "/topicforme/123"
 
