@@ -20,6 +20,7 @@ void setup()
   WiFiConfig::init();
   WiFiConnect::connect();
   WiFiPortal::start();
+  Serial.println("By OTA");
 }
 
 void loop()

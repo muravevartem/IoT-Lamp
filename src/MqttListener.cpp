@@ -4,25 +4,42 @@
 #include "MqttProducer.h"
 #include "DeviceRegistrar.h"
 
-#define TEST_TOPIC_1 "/topicforme/123"
+#include "Ota.h"
+
+// Topics
+#define UPDATES_TOPIC "lamp/updates"
 
 extern PubSubClient _mqtt_client;
+
 
 void MqttListener::init()
 {
     _mqtt_client.setCallback(MqttListener::callback);
-    DebugLn("Used callback function");
-    _mqtt_client.subscribe(TEST_TOPIC_1);
-    Debug("Subscribed on topic = ");
-    DebugLn(TEST_TOPIC_1);
+    DebugLn("MQTT :: Used callback function");
+    subscribe(UPDATES_TOPIC);
 }
 
-void MqttListener::callback(char* topic, byte* payload, unsigned int length)
+void MqttListener::subscribe(const char *topic)
+{
+    _mqtt_client.subscribe(topic);
+    Debug("MQTT :: Subscribed on ");
+    DebugLn(topic);
+}
+
+void MqttListener::callback(char *topic, byte *payload, unsigned int length)
 {
     DebugLn(topic);
     String _topic(topic);
-    if (_topic.equals(TEST_TOPIC_1))
+    String _payload;
+    for_i(length)
     {
-        MqttProducer::send("test/123", "Так-с, что-то не так");
+        _payload += String((char)payload[i]);
+    }
+    _payload.toLowerCase();
+    _payload.trim();
+
+    if (_topic.equals(UPDATES_TOPIC))
+    {
+        OTA::start(_payload.c_str());
     }
 }

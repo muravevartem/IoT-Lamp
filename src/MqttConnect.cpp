@@ -14,7 +14,7 @@ bool Mqtt::isConnected()
 
     if (!_mqtt_client.connected())
     {
-        Debug("Connecting to ");
+        Debug("MQTT :: Connecting to ");
         Debug(MQTT_SERVER_URL);
         Debug(":");
         DebugLn(MQTT_SERVER_PORT);

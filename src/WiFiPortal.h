@@ -10,7 +10,5 @@
 namespace WiFiPortal
 {
     void tick();
-
     void start();
-    
 }
