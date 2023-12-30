@@ -70,4 +70,9 @@ void Led::show()
     FastLED.show();
 }
 
+CRGB* Led::getLeds()
+{
+    return _leds;
+}
+
 Led Strip = Led();

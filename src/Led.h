@@ -18,6 +18,7 @@ public:
     void setEffect(void (*effect)());
     void setPixelColor(int i, CRGB crgb);
     void show();
+    CRGB* getLeds();
 };
 
 extern Led Strip;
