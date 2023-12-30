@@ -1,7 +1,7 @@
 #include "WiFiConnect.h"
 #include "WiFiConfig.h"
 #include "ESP8266WiFi.h"
-#include "DeviceRegistrar.h"
+#include "Led.h"
 
 #define WIFI_AP_MODE 0x1
 #define WIFI_STA_MODE 0x2
@@ -97,7 +97,7 @@ bool WiFiConnect::connect()
             connect();
             return false;
         }
-        DeviceRegistrar::regist();
+        // DeviceRegistrar::regist();
         return true;
     }
     else

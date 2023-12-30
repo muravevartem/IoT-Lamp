@@ -11,7 +11,6 @@
 
 extern PubSubClient _mqtt_client;
 
-
 void MqttListener::init()
 {
     _mqtt_client.setCallback(MqttListener::callback);
@@ -40,6 +39,6 @@ void MqttListener::callback(char *topic, byte *payload, unsigned int length)
 
     if (_topic.equals(UPDATES_TOPIC))
     {
-        OTA::start(_payload.c_str());
+        uint8_t statusCode = OTA::start(_payload.c_str());
     }
 }

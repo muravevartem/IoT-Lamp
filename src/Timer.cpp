@@ -8,7 +8,12 @@ Timer::Timer(int de)
 
 bool Timer::click()
 {
-    return (millis() - _clk > _delay);
+    bool isClicked = (millis() - _clk > _delay);
+    if (isClicked)
+    {
+        _clk = millis();
+    }
+    return isClicked;
 }
 
 void Timer::reset()

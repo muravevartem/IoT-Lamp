@@ -13,11 +13,14 @@ uint8_t OTA::start(const char *fileUrl)
     t_httpUpdate_return t = ESPhttpUpdate.update(otaWifi, fileUrl);
     if (t == HTTP_UPDATE_FAILED) 
     {
+        DebugLn("OTA :: Update failed");
         return -1;
     }
     if (t == HTTP_UPDATE_NO_UPDATES)
     {
+        DebugLn("OTA :: Update no updates");
         return 1;
     }
+    DebugLn("OTA :: Update OK");
     return 0;
 }
