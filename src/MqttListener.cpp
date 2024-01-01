@@ -2,7 +2,6 @@
 #include "PubSubClient.h"
 #include "Utitlity.h"
 #include "MqttProducer.h"
-#include "DeviceRegistrar.h"
 
 #include "Ota.h"
 

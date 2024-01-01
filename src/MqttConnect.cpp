@@ -1,16 +1,15 @@
 #include "MqttConnect.h"
-#include "ESP8266WiFi.h"
+#include "WiFiTool.h"
 #include "PubSubClient.h"
 #include "MqttListener.h"
 #include "Timer.h"
 #include "Utitlity.h"
 
-extern WiFiClient _wifi_client;
-PubSubClient _mqtt_client(MQTT_SERVER_URL, MQTT_SERVER_PORT, _wifi_client);
+PubSubClient _mqtt_client(MQTT_SERVER_URL, MQTT_SERVER_PORT, WIFIClient);
 
 bool Mqtt::isConnected()
 {
-    if (WiFi.status() != WL_CONNECTED)
+    if (!WIFITool.staConnected())
         return false;
     
     if (!_mqtt_client.connected())
@@ -43,7 +42,7 @@ void Mqtt::tick()
 {
     if (isConnected())
     {
-        if (WiFi.status() != WL_CONNECTED)
+        if (!WIFITool.staConnected())
             return;
         _mqtt_client.loop();
     }

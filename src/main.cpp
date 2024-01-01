@@ -2,15 +2,13 @@
 #include <EEPROM.h>
 
 #include <Timer.h>
-#include <clock.h>
 #include <WiFiPortal.h>
-#include <WiFiConfig.h>
-#include <WiFiConnect.h>
 #include <MqttConnect.h>
 #include <MqttProducer.h>
 #include <Led.h>
 #include <Utitlity.h>
 #include <GyverButton.h>
+#include <WiFiTool.h>
 
 /* Sensor button */
 #define SENSOR_BTN_GND 13
@@ -21,8 +19,10 @@
 #define LED_MATRIX_SIZE 16
 #define LED_MAXBRIGHTNESS 100
 
-#define DEBUG_ESP_PORT Serial
-#define DEBUG_ESP_HTTP_CLIENT
+/* WiFi */
+#define DEFAULT_WIFI_AP_SSID "Esp8266"
+#define DEFAULT_WIFI_CONNECTION_ATTEMPS 5
+
 
 GButton mainBtn(SENSOR_BTN_PIN);
 
@@ -38,17 +38,17 @@ void setup()
     randomSeed(seed);
   }
 
-  // Serial.begin(9600);
+  Serial.begin(9600);
   EEPROM.begin(6000);
-  WiFiConfig::init();
-  WiFiConnect::connect();
+
+  WIFITool.initByEEPROM();
   WiFiPortal::start();
   Strip.setup();
 }
 
 void loop()
 {
-  WiFiConnect::isConnected();
+  WIFITool.tick();
   WiFiPortal::tick();
   mainBtn.tick();
   Mqtt::tick();

@@ -34,15 +34,6 @@ void Led::tick()
     case 0:
         wait();
         break;
-    case 1:
-        wait_green();
-        break;
-    case 2:
-        wait_indigo();
-        break;
-    case 3:
-        wait_fire();
-        break;
     default:
         currentEffect = 0;
         tick();
@@ -53,16 +44,6 @@ void Led::tick()
 int Led::getSize()
 {
     return led_num;
-}
-
-void Led::setEffect(void (*effect)())
-{
-    _current_tick = effect;
-}
-
-void Led::setPixelColor(int i, CRGB crgb)
-{
-    _leds[i] = crgb;
 }
 
 void Led::show()

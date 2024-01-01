@@ -9,14 +9,12 @@
 class Led
 {
 private:
-    void (*_current_tick)();
+    uint8_t _current_effect = 0;
     CRGB _leds[LED_MATRIX_SIZE * LED_MATRIX_SIZE];
 public:
     void setup();
     void tick();
     int getSize();
-    void setEffect(void (*effect)());
-    void setPixelColor(int i, CRGB crgb);
     void show();
     CRGB* getLeds();
 };
